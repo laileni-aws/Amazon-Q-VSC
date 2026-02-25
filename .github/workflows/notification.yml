@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
     notify:
-        if: github.repository == 'aws/aws-toolkit-vscode'
+        if: github.repository == 'aws/amazon-q-vscode'
         runs-on: ubuntu-latest
         permissions:
             pull-requests: write
