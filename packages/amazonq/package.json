@@ -11,10 +11,10 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/aws/aws-toolkit-vscode"
+        "url": "https://github.com/aws/amazon-q-vscode"
     },
     "bugs": {
-        "url": "https://github.com/aws/aws-toolkit-vscode/issues"
+        "url": "https://github.com/aws/amazon-q-vscode/issues"
     },
     "galleryBanner": {
         "color": "#232F3E",
@@ -36,7 +36,7 @@
         "Q Developer"
     ],
     "preview": false,
-    "qna": "https://github.com/aws/aws-toolkit-vscode/issues",
+    "qna": "https://github.com/aws/amazon-q-vscode/issues",
     "activationEvents": [
         "onStartupFinished",
         "onUri",

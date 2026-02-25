@@ -55,4 +55,4 @@ Generate code, explain code, and get answers about software development.
 
 # Troubleshooting & feedback
 
-[File a bug](https://github.com/aws/aws-toolkit-vscode/issues/new?assignees=&labels=bug&projects=&template=bug_report.md) or [submit a feature request](https://github.com/aws/aws-toolkit-vscode/issues/new?assignees=&labels=feature-request&projects=&template=feature_request.md) on our Github repository.
+[File a bug](https://github.com/aws/amazon-q-vscode/issues/new?assignees=&labels=bug&projects=&template=bug_report.md) or [submit a feature request](https://github.com/aws/amazon-q-vscode/issues/new?assignees=&labels=feature-request&projects=&template=feature_request.md) on our Github repository.

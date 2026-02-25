@@ -2,7 +2,7 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 #
 # Troubleshooting: Insights tab > Dependency Graph > Dependabot
-# https://github.com/aws/aws-toolkit-vscode/network/updates
+# https://github.com/aws/amazon-q-vscode/network/updates
 
 version: 2
 updates:
