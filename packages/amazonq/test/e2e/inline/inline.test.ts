@@ -16,8 +16,10 @@ import {
 } from 'aws-core-vscode/test'
 import { RecommendationHandler, RecommendationService, session } from 'aws-core-vscode/codewhisperer'
 import { Commands, globals, sleep, waitUntil, collectionUtil } from 'aws-core-vscode/shared'
-import { loginToIdC } from '../amazonq/utils/setup'
+import { loginToIdC, isSSOTestEnvironmentAvailable } from '../amazonq/utils/setup'
 
+// These tests require SSO auth infrastructure (auth Lambda + Secrets Manager) only available in internal CI.
+// They are skipped in GitHub Actions since the repo is open source and credentials cannot be exposed.
 describe('Amazon Q Inline', async function () {
     const retries = 3
     this.retries(retries)
@@ -30,6 +32,9 @@ describe('Amazon Q Inline', async function () {
     }
 
     before(async function () {
+        if (!isSSOTestEnvironmentAvailable()) {
+            this.skip()
+        }
         await using(registerAuthHook('amazonq-test-account'), async () => {
             await loginToIdC()
         })

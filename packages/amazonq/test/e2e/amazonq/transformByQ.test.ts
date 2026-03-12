@@ -15,15 +15,20 @@ import {
 } from 'aws-core-vscode/codewhisperer'
 import { GumbyController, setMaven, startTransformByQ, TabsStorage } from 'aws-core-vscode/amazonqGumby'
 import { using, registerAuthHook, TestFolder } from 'aws-core-vscode/test'
-import { loginToIdC } from './utils/setup'
+import { isSSOTestEnvironmentAvailable, loginToIdC } from './utils/setup'
 import { fs } from 'aws-core-vscode/shared'
 import path from 'path'
 
+// These tests require SSO auth infrastructure (auth Lambda + Secrets Manager) only available in internal CI.
+// They are skipped in GitHub Actions since the repo is open source and credentials cannot be exposed.
 describe('Amazon Q Code Transformation', function () {
     let framework: qTestingFramework
     let tab: Messenger
 
     before(async function () {
+        if (!isSSOTestEnvironmentAvailable()) {
+            this.skip()
+        }
         await using(registerAuthHook('amazonq-test-account'), async () => {
             await loginToIdC()
         })
