@@ -10,7 +10,7 @@ import { qTestingFramework } from './framework/framework'
 import sinon from 'sinon'
 import { Messenger } from './framework/messenger'
 import { registerAuthHook, using, closeAllEditors } from 'aws-core-vscode/test'
-import { loginToIdC } from './utils/setup'
+import { isSSOTestEnvironmentAvailable, loginToIdC } from './utils/setup'
 import {
     codewhispererDiagnosticSourceLabel,
     invalidFileTypeChatMessage,
@@ -29,6 +29,8 @@ function getWorkspaceFolder(): string {
     return vscode.workspace.workspaceFolders![0].uri.fsPath
 }
 
+// These tests require SSO auth infrastructure (auth Lambda + Secrets Manager) only available in internal CI.
+// They are skipped in GitHub Actions since the repo is open source and credentials cannot be exposed.
 describe('Amazon Q Code Review', function () {
     let framework: qTestingFramework
     let tab: Messenger
@@ -105,6 +107,9 @@ describe('Amazon Q Code Review', function () {
     }
 
     before(async function () {
+        if (!isSSOTestEnvironmentAvailable()) {
+            this.skip()
+        }
         await using(registerAuthHook('amazonq-test-account'), async () => {
             await loginToIdC()
         })

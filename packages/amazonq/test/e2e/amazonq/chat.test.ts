@@ -10,9 +10,11 @@ import { Messenger } from './framework/messenger'
 import { MynahUIDataModel } from '@aws/mynah-ui'
 import { assertContextCommands, assertQuickActions } from './assert'
 import { registerAuthHook, using } from 'aws-core-vscode/test'
-import { loginToIdC } from './utils/setup'
+import { isSSOTestEnvironmentAvailable, loginToIdC } from './utils/setup'
 import { webviewConstants, webviewTabConstants } from 'aws-core-vscode/amazonq'
 
+// These tests require SSO auth infrastructure (auth Lambda + Secrets Manager) only available in internal CI.
+// They are skipped in GitHub Actions since the repo is open source and credentials cannot be exposed.
 describe('Amazon Q Chat', function () {
     this.retries(3)
     let framework: qTestingFramework
@@ -22,10 +24,9 @@ describe('Amazon Q Chat', function () {
     const availableCommands: string[] = ['/dev', '/test', '/review', '/doc', '/transform']
 
     before(async function () {
-        /**
-         * Login to the amazonq-test-account. When running in CI this has unlimited
-         * calls to the backend api
-         */
+        if (!isSSOTestEnvironmentAvailable()) {
+            this.skip()
+        }
         await using(registerAuthHook('amazonq-test-account'), async () => {
             await loginToIdC()
         })
